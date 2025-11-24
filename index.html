@@ -59,23 +59,38 @@
   .line { display:flex; align-items:center; justify-content:flex-start; background:rgba(0,0,0,.018); border:1px solid rgba(0,0,0,.05); padding:10px 12px; border-radius:14px; transition:background var(--atea-transition), border-color var(--atea-transition), color var(--atea-transition); text-decoration:none; color:inherit; width:100%; box-sizing:border-box; gap:12px; min-height:46px; }
   .line-cash { cursor:pointer; }
   .line-group { display:flex; flex-direction:column; gap:10px; align-items:flex-start; width:100%; }
-  .line-group-monthly { gap:8px; }
   .cash-chip { font-size:9px; letter-spacing:.12em; color:#333; background:rgba(0,0,0,.07); padding:4px 10px 3px; border-radius:999px; text-transform:uppercase; font-weight:600; display:inline-flex; align-items:center; white-space:nowrap; }
   .line-cash:hover { background:rgba(var(--atea-color-brand-primary-rgb),.08); border-color:var(--atea-color-brand-primary); }
+  .line-group-monthly { display:flex; flex-direction:column; gap:12px; width:100%; }
   .line-monthly { display:none; }
   .card.view-monthly .line-monthly { display:flex; }
-  .line-group-monthly { display:flex; flex-direction:column; gap:8px; width:100%; }
   .card.view-cash .line-group-monthly { display:none; }
-  .line.line-monthly { flex-direction:column; align-items:stretch; gap:8px; width:100%; padding:14px 16px; border-radius:14px; border:1px solid rgba(0,0,0,.08); background:#fff; text-decoration:none; transition:background var(--atea-transition), color var(--atea-transition), border-color var(--atea-transition), box-shadow var(--atea-transition); box-sizing:border-box; overflow:hidden; }
-  .line.line-monthly .row { display:flex; justify-content:flex-start; align-items:center; gap:12px; width:100%; }
-  .line.line-monthly .lbl { font-size:11px; opacity:.72; letter-spacing:.08em; text-transform:uppercase; }
-  .line.line-monthly .val { font-size:20px; font-weight:700; letter-spacing:-.01em; color:currentColor; font-variant-numeric:tabular-nums; }
-  .line.line-monthly .details { display:flex; flex-wrap:wrap; align-items:center; gap:8px; width:100%; font-size:11px; font-weight:600; letter-spacing:.01em; color:rgba(0,0,0,.72); line-height:1.45; }
-  .line.line-monthly .detail { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:8px; background:var(--atea-color-brand-primary); color:#fff; border:1px solid rgba(255,255,255,.35); white-space:normal; word-break:break-word; }
+  .line.line-monthly { flex-direction:column; align-items:flex-start; gap:12px; width:100%; padding:16px 18px; border-radius:14px; border:1px solid rgba(0,0,0,.08); background:linear-gradient(135deg, rgba(var(--atea-color-brand-primary-rgb),.12) 0%, rgba(255,255,255,.98) 100%); text-decoration:none; transition:background var(--atea-transition), color var(--atea-transition), border-color var(--atea-transition), box-shadow var(--atea-transition), transform var(--atea-transition); box-sizing:border-box; overflow:hidden; position:relative; }
+  .line.line-monthly::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; box-shadow:0 20px 40px -28px rgba(0,0,0,.35); opacity:0; transition:opacity var(--atea-transition); }
+  .card.view-monthly .line.line-monthly:hover { transform:translateY(-1px); box-shadow:0 10px 26px -22px rgba(0,0,0,.32); }
+  .card.view-monthly .line.line-monthly:hover::after { opacity:1; }
+  .line.line-monthly .monthly-head { display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; }
+  .line.line-monthly .monthly-chip { font-size:9px; letter-spacing:.12em; text-transform:uppercase; font-weight:700; background:rgba(var(--atea-color-brand-primary-rgb),.18); color:var(--atea-color-brand-primary); padding:4px 10px 3px; border-radius:999px; }
+  .line.line-monthly .monthly-term { font-size:11px; font-weight:600; letter-spacing:.03em; text-transform:uppercase; color:rgba(0,0,0,.58); }
+  .line.line-monthly .val { font-size:clamp(22px, 4vw, 26px); font-weight:700; letter-spacing:-.015em; color:currentColor; font-variant-numeric:tabular-nums; }
+  .line.line-monthly .details { display:flex; flex-wrap:wrap; align-items:center; gap:8px; width:100%; font-size:11px; font-weight:600; letter-spacing:.01em; color:rgba(0,0,0,.68); line-height:1.4; }
+  .line.line-monthly .detail { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:10px; background:rgba(255,255,255,.82); color:inherit; border:1px solid rgba(0,0,0,.05); white-space:normal; word-break:break-word; }
   .line.line-monthly .detail:empty { display:none; }
-  .line.line-monthly.is-save { background:var(--atea-color-brand-primary); border-color:var(--atea-color-brand-primary); color:#fff; box-shadow:0 12px 28px -18px rgba(0,0,0,.5); }
-  .line.line-monthly.is-plus { background:#C75A1C; border-color:#C75A1C; color:#fff; box-shadow:0 12px 28px -18px rgba(0,0,0,.5); }
-  .line.line-monthly.is-even { background:#5A5A5A; border-color:#5A5A5A; color:#fff; box-shadow:0 12px 28px -18px rgba(0,0,0,.45); }
+  .line.line-monthly.is-save { background:var(--atea-color-brand-primary); border-color:var(--atea-color-brand-primary); color:#fff; box-shadow:0 18px 40px -26px rgba(0,0,0,.52); }
+  .line.line-monthly.is-plus { background:#C75A1C; border-color:#C75A1C; color:#fff; box-shadow:0 18px 40px -26px rgba(0,0,0,.52); }
+  .line.line-monthly.is-even { background:#5A5A5A; border-color:#5A5A5A; color:#fff; box-shadow:0 18px 40px -26px rgba(0,0,0,.45); }
+  .line.line-monthly.is-save .monthly-chip,
+  .line.line-monthly.is-plus .monthly-chip,
+  .line.line-monthly.is-even .monthly-chip { background:rgba(255,255,255,.25); color:#fff; }
+  .line.line-monthly.is-save .monthly-term,
+  .line.line-monthly.is-plus .monthly-term,
+  .line.line-monthly.is-even .monthly-term { color:rgba(255,255,255,.85); }
+  .line.line-monthly.is-save .details,
+  .line.line-monthly.is-plus .details,
+  .line.line-monthly.is-even .details { color:rgba(255,255,255,.92); }
+  .line.line-monthly.is-save .detail,
+  .line.line-monthly.is-plus .detail,
+  .line.line-monthly.is-even .detail { background:rgba(0,0,0,.16); border-color:rgba(255,255,255,.3); color:#fff; }
   .line .lbl { font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; opacity:.7; }
   .line .val { margin-left:auto; font-size:clamp(18px, 3.6vw, 20px); font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
   .line.active { background:var(--atea-color-brand-primary); border-color:var(--atea-color-brand-primary); }
@@ -134,7 +149,8 @@
     const containerMarket = document.getElementById('priceModuleRoot')?.getAttribute('data-market') || document.querySelector('[data-price-module-root]')?.getAttribute('data-market');
     const attrMarket=document.documentElement.getAttribute('data-market');
     const metaMarket=document.querySelector('meta[name="market"]')?.content;
-    const urlMarket=new URLSearchParams(location.search).get('market');
+    const searchParams=new URLSearchParams(location.search);
+    const urlMarket=searchParams.get('market');
     let market=(globalMarket||scriptMarket||containerMarket||attrMarket||metaMarket||urlMarket||'se');
     market=(market||'se').toLowerCase();
     // Locale & currency per market
@@ -234,17 +250,18 @@
       <a class='line line-cash' target='_blank' rel='noopener noreferrer'><span class='val js-price-cash'></span></a>
     </div>
     <div class='line-group line-group-monthly'>
-      <a class='line line-monthly' href='#'>
-        <div class='row'>
-          <span class='lbl js-month-label'>/${L.labels.monthsAbbrev}</span>
-          <span class='val js-price-monthly'></span>
+      <div class='line line-monthly' role='group'>
+        <div class='monthly-head'>
+          <span class='monthly-chip'>${L.labels.monthly}</span>
+          <span class='monthly-term js-month-label'></span>
         </div>
+        <span class='val js-price-monthly'></span>
         <div class='details'>
           <span class='detail js-detail-total'></span>
           <span class='detail js-detail-cash'></span>
           <span class='detail js-detail-diff'></span>
         </div>
-      </a>
+      </div>
     </div>
   </div>
   <p class='card-disclaimer js-card-disclaimer' aria-live='polite'></p>
@@ -295,7 +312,7 @@
     const monthlyValue = card.querySelector('.js-price-monthly');
     if(monthlyValue) monthlyValue.textContent = format(monthly);
     const monthLabel = card.querySelector('.js-month-label');
-    if(monthLabel) monthLabel.textContent = `${state.months}/${L.labels.monthsAbbrev}`;
+    if(monthLabel) monthLabel.textContent = `${state.months} ${L.labels.monthsAbbrev}`;
 
   const lineMonthly = card.querySelector('.line-monthly');
   const detailTotal = card.querySelector('.js-detail-total');
@@ -342,7 +359,6 @@
       lineCash.classList.toggle('active', state.view === 'cash');
     }
     if(lineMonthly){
-      lineMonthly.removeAttribute('href');
       lineMonthly.setAttribute('aria-label', `${L.labels.monthly} för ${name}`);
     }
     const disEl = card.querySelector('.js-card-disclaimer');
