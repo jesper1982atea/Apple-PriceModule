@@ -182,12 +182,27 @@
     mac:[{months:24,tariff:3.376},{months:36,tariff:2.622}],
     ipad:[{months:24,tariff:3.376},{months:36,tariff:2.622}]
   };
-  const defaultCategory='iphone';
-  const fallbackScenarios=scenarioConfig[defaultCategory];
+  const categoryIds=new Set(categories.map(c=>c.id));
+  function normalizeCategory(value){
+    if(value==null) return null;
+    const key=String(value).trim().toLowerCase();
+    return categoryIds.has(key)?key:null;
+  }
+  const globalCategoryPref=(window.APP_CATEGORY||window.AteaPriceCategory||window.PriceModuleCategory);
+  const scriptCategoryPref=scriptEl?.getAttribute('data-default-category');
+  const containerCategoryPref=document.getElementById('priceModuleRoot')?.getAttribute('data-default-category')||document.querySelector('[data-price-module-root]')?.getAttribute('data-default-category');
+  const attrCategoryPref=document.documentElement.getAttribute('data-default-category')||document.documentElement.getAttribute('data-price-category');
+  const bodyCategoryPref=document.body?.getAttribute('data-default-category');
+  const metaCategoryPref=document.querySelector('meta[name="price-module-category"]')?.content;
+  const urlCategoryPref=searchParams.get('category');
+  const preferredCategory=[globalCategoryPref,scriptCategoryPref,containerCategoryPref,attrCategoryPref,bodyCategoryPref,metaCategoryPref,urlCategoryPref].map(normalizeCategory).find(Boolean);
+  const fallbackCategory='iphone';
+  const defaultCategory=preferredCategory||fallbackCategory;
+  const fallbackScenarios=scenarioConfig[defaultCategory]||scenarioConfig[fallbackCategory];
   function getScenarios(category){
     return scenarioConfig[category]||fallbackScenarios;
   }
-  const initialScenario=getScenarios(defaultCategory)[0];
+  const initialScenario=getScenarios(defaultCategory)[0]||{months:24,tariff:3.125};
   const state={ view:'cash', category:defaultCategory, months:initialScenario.months, tariff:initialScenario.tariff };
   function scenarioLabel(m){
     // Always use locale-configured abbreviation; capitalize first letter for button aesthetics.
@@ -272,7 +287,8 @@
     function buildColorDots(){ document.querySelectorAll('.card').forEach(card=>{ const cfg=colorConfig[card.dataset.model]; if(!cfg) return; const wrap=card.querySelector('.colors'); wrap.innerHTML=''; let first=null; cfg.forEach(v=>{ const btn=document.createElement('button'); btn.type='button'; btn.className='color-dot'; btn.style.background=v.hex; if(v.border) btn.style.boxShadow=`0 0 0 1px ${v.border}`; btn.setAttribute('aria-label',v.label); btn.dataset.file=v.file; btn.addEventListener('click',()=>applyColor(card,btn)); wrap.appendChild(btn); if(!first) first=btn; }); if(first){ first.classList.add('active'); applyColor(card,first);} else { wrap.style.display='none'; } }); }
     function attachSwipe(){ document.querySelectorAll('.card').forEach(card=>{ const dots=Array.from(card.querySelectorAll('.color-dot')); if(dots.length<2) return; const fig=card.querySelector('.figure'); let startX=0, startY=0; fig.addEventListener('touchstart',e=>{ if(e.touches.length!==1) return; startX=e.touches[0].clientX; startY=e.touches[0].clientY; },{passive:true}); fig.addEventListener('touchend',e=>{ if(startX===0) return; const endX=e.changedTouches[0].clientX; const endY=e.changedTouches[0].clientY; const dx=endX-startX; const dy=endY-startY; const TH=40; if(Math.abs(dx)>TH && Math.abs(dx)>Math.abs(dy)){ const activeIndex=dots.findIndex(d=>d.classList.contains('active')); if(activeIndex===-1) return; let nextIndex; if(dx<0){ nextIndex=(activeIndex+1)%dots.length; } else { nextIndex=(activeIndex-1+dots.length)%dots.length; } applyColor(card,dots[nextIndex]); } startX=0; startY=0; },{passive:true}); }); }
     function applyColor(card,btn){ if(!btn) return; card.querySelectorAll('.color-dot').forEach(d=>d.classList.toggle('active',d===btn)); card.querySelector('.figure').style.backgroundImage=`url(${btn.dataset.file})`; }
-    function buildProductBar(){ const bar=document.getElementById('productBar'); bar.innerHTML=''; categories.forEach(cat=>{ const btn=document.createElement('button'); btn.className='product-btn'+(state.category===cat.id?' active':''); btn.dataset.category=cat.id; btn.textContent=cat.label; bar.appendChild(btn); }); }
+    function syncProductButtons(){ document.querySelectorAll('.product-btn').forEach(btn=>{ btn.classList.toggle('active',btn.dataset.category===state.category); }); }
+    function buildProductBar(){ const bar=document.getElementById('productBar'); bar.innerHTML=''; categories.forEach(cat=>{ const btn=document.createElement('button'); btn.className='product-btn'+(state.category===cat.id?' active':''); btn.dataset.category=cat.id; btn.textContent=cat.label; bar.appendChild(btn); }); syncProductButtons(); }
     function buildViewBar(){ const bar=document.getElementById('viewBar'); bar.innerHTML=''; ['cash','monthly'].forEach(id=>{ const btn=document.createElement('button'); btn.className='view-btn'+(state.view===id?' active':''); btn.dataset.view=id; btn.textContent=id==='cash'?L.labels.cash:L.labels.monthly; bar.appendChild(btn); }); }
   function buildScenarioBar(){
     const bar=document.getElementById('scenarioBar');
@@ -368,25 +384,29 @@
   });
   const monthlyArr=cards.map(c=>({c,m:+c.dataset.base*(state.tariff/100)})); if(monthlyArr.length){ const min=Math.min(...monthlyArr.map(o=>o.m)); monthlyArr.forEach(o=>{ const ribbon=o.c.querySelector('.ribbon'); if(o.m===min && state.view==='monthly'){ ribbon.hidden=false; } else { ribbon.hidden=true; } }); }
     }
+    function setCategory(newCategory){
+      const normalized=normalizeCategory(newCategory);
+      if(!normalized) return false;
+      const changed=state.category!==normalized;
+      state.category=normalized;
+      const scenariosForCategory=getScenarios(state.category);
+      if(scenariosForCategory.length){
+        const matched=scenariosForCategory.find(s=>s.months===state.months);
+        const nextScenario=matched||scenariosForCategory[0];
+        state.months=nextScenario.months;
+        state.tariff=nextScenario.tariff;
+      }
+      buildScenarioBar();
+      syncProductButtons();
+      render();
+      return changed;
+    }
     document.getElementById('viewBar').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; document.querySelectorAll('.view-btn').forEach(x=>x.classList.toggle('active',x===b)); state.view=b.dataset.view; render();});
     document.getElementById('scenarioBar').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; document.querySelectorAll('.scenario-btn').forEach(x=>x.classList.toggle('active',x===b)); state.months=+b.dataset.months; state.tariff=+b.dataset.tariff; render();});
     document.getElementById('productBar').addEventListener('click',e=>{
       const b=e.target.closest('button');
       if(!b) return;
-      document.querySelectorAll('.product-btn').forEach(x=>x.classList.toggle('active',x===b));
-      const newCategory=b.dataset.category;
-      if(state.category!==newCategory){
-        state.category=newCategory;
-        const scenariosForCategory=getScenarios(state.category);
-        if(scenariosForCategory.length){
-          const matched=scenariosForCategory.find(s=>s.months===state.months);
-          const nextScenario=matched||scenariosForCategory[0];
-          state.months=nextScenario.months;
-          state.tariff=nextScenario.tariff;
-        }
-        buildScenarioBar();
-      }
-      render();
+      setCategory(b.dataset.category);
     });
     // ===== Runtime market reconfiguration helper =====
     function applyMarket(newMarket){
@@ -407,6 +427,7 @@
       attachSwipe();
       render();
     }
+    window.setPriceModuleCategory = setCategory;
     window.setPriceModuleMarket = applyMarket; // public API
     applyMarket(market); // initial boot
   })();
