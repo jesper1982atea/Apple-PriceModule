@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Apple för företag – Mac fungerar i företag | Atea (Mockup)</title>
+<style>
+  /* ====== Bas / “Atea-look” utan externa beroenden ====== */
+  :root{
+    --atea-green:#006940;
+    --atea-green-dark:#004c2d;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --bg:#ffffff;
+    --bg-alt:#f6f6f6;
+    --border:#e5e7eb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  a{color:inherit;text-decoration:none}
+  ul{margin:0;padding-left:1.2rem}
+  h1,h2,h3{margin:0 0 .5rem}
+  .container{max-width:1200px;margin:auto;padding:0 20px}
+
+  /* ====== Top-nav ====== */
+  .nav{
+    position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+  /* “ATEA”-logga som inline-SVG (stiliserad) */
+  .atea-logo{width:86px;height:22px;display:block}
+  .nav-links{display:flex;gap:24px}
+  .nav a{font-weight:600;color:#111}
+  .nav a:hover{color:var(--atea-green)}
+
+  /* ====== Hero med CTA ====== */
+  .hero{
+    position:relative;isolation:isolate;overflow:hidden;color:#fff
+  }
+  /* Hero-bild stand-in: gradient + svag Mac-siluett */
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(1000px 400px at 50% -100px, rgba(255,255,255,.15), transparent 60%),
+               linear-gradient(120deg,#1f2937 0%, #2e5548 45%, #18392e 100%);
+    z-index:-2;
+  }
+  .hero::after{
+    /* “guld-Mac bakifrån”-känsla som tonad overlay */
+    content:"";position:absolute;inset:0;opacity:.15;z-index:-1;
+    background:
+      radial-gradient(600px 200px at 50% 30%, #f3d9a4, transparent 60%),
+      radial-gradient(800px 280px at 50% 20%, #f8e7c2, transparent 60%);
+  }
+  .hero-inner{padding:100px 20px 80px}
+  .hero h1{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;margin-bottom:12px}
+  .hero p{font-size:clamp(1rem,2.2vw,1.15rem);max-width:760px;color:#eef2f7;margin:0 0 28px}
+  .btn{
+    display:inline-block;background:var(--atea-green);color:#fff;border-radius:999px;
+    padding:12px 22px;font-weight:700;border:none;cursor:pointer
+  }
+  .btn:hover{background:var(--atea-green-dark)}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+
+  /* ====== Sektioner ====== */
+  section{padding:64px 0}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:40px}
+  @media (max-width:900px){.two-col{grid-template-columns:1fr;}}
+  .standin-img{
+    width:100%;aspect-ratio:16/10;border-radius:12px;border:1px solid var(--border);
+    background:
+      linear-gradient(135deg,#ececec,#f7f7f7 40%,#ececec 100%);
+    display:grid;place-items:center;color:#888;font-weight:700
+  }
+
+  /* ====== “Erbjudanden”-kort (ikoner) ====== */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media (max-width:900px){.grid-3{grid-template-columns:1fr}}
+  .tile{padding:18px;border-radius:12px;border:1px solid var(--border);background:#fff}
+  .tile h3{margin:.5rem 0 .25rem;font-size:1.05rem}
+  .tile p{margin:0;color:var(--muted);font-size:.95rem}
+  .icon{
+    width:40px;height:40px;border-radius:10px;border:1px solid var(--border);display:grid;place-items:center;
+    background:linear-gradient(#fff,#f4f4f4)
+  }
+
+  /* ====== Kalkylator ====== */
+  .calc{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:24px}
+  @media (max-width:900px){.calc{grid-template-columns:1fr}}
+  .calc .field{display:grid;gap:6px}
+  .calc label{font-weight:700}
+  .calc input, .calc select{
+    height:44px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font:inherit
+  }
+  .calc .result{
+    border-top:1px dashed var(--border);margin-top:8px;padding-top:12px;font-weight:800
+  }
+  .muted{color:var(--muted)}
+
+  /* ====== CTA-band ====== */
+  .cta-band{background:var(--atea-green);color:#fff;text-align:center;padding:56px 20px}
+  .cta-band p{margin:.25rem auto 1rem;max-width:700px;color:#eaf3ee}
+
+  /* ====== Footer ====== */
+  .footer{background:#111;color:#bbb}
+  .footer a{color:#ddd}
+  .foot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:36px 20px}
+  @media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:640px){.foot-grid{grid-template-columns:1fr}}
+  .foot-col h4{margin:0 0 .6rem;font-size:1rem;color:#fff}
+  .foot-bottom{border-top:1px solid #222;padding:16px 0;text-align:center;font-size:.9rem}
+  /* Små “produktslider”-standins för att efterlikna blocket */
+  .product-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media (max-width:900px){.product-row{grid-template-columns:1fr}}
+  .product{border:1px solid var(--border);border-radius:12px;padding:16px;background:#fff}
+  .product .pic{height:140px;border-radius:10px;border:1px solid var(--border);background:linear-gradient(#fafafa,#efefef);display:grid;place-items:center;color:#777;font-weight:700}
+  .badge{display:inline-block;font-size:.8rem;padding:4px 10px;border-radius:999px;background:#eef7f1;color:#205c3b;border:1px solid #d9eadf}
+</style>
+</head>
+<body>
+
+<!-- ====== NAV ====== -->
+<header class="nav">
+  <div class="container nav-inner">
+    <div class="brand">
+      <!-- Enkel ATEA-logga i SVG (stand-in) -->
+      <svg class="atea-logo" viewBox="0 0 160 40" aria-label="Atea">
+        <text x="0" y="28" font-size="28" font-family="Arial Black, Arial" fill="#0f172a" letter-spacing="2">ATEA</text>
+      </svg>
+    </div>
+    <nav class="nav-links">
+      <a href="#">Tjänster &amp; lösningar</a>
+      <a href="#">Offentlig sektor</a>
+      <a href="#">Inspiration &amp; event</a>
+      <a href="#">Om Atea</a>
+      <a href="#">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ====== HERO ====== -->
+<section class="hero">
+  <div class="container hero-inner">
+    <h1>Mac fungerar i företag — och kostar mindre än du tror</h1>
+    <p>
+      Mac integreras sömlöst i Microsoft-miljöer och ger lägre totalkostnad över tid.
+      Oavsett om du är i offentlig sektor eller privat verksamhet – Mac fungerar.
+    </p>
+    <div class="hero-cta">
+      <button class="btn" onclick="document.getElementById('kontakt').scrollIntoView({behavior:'smooth'})">Jag vill ha kontakt</button>
+      <button class="btn" style="background:#fff;color:var(--atea-green);border:1px solid #cfe7d8" onclick="document.getElementById('kalkylator').scrollIntoView({behavior:'smooth'})">Räkna på din TCO</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== INTRO ====== -->
+<section class="container">
+  <div class="two-col">
+    <div>
+      <h2>Mac fungerar i alla miljöer</h2>
+      <p>
+        Våra konsulter hjälper dig att ansluta till Microsoft 365, Active Directory, VPN, Teams och era affärssystem.
+        Med Intune, Jamf och Apple Business Manager blir driftsättning och hantering enkel och säker.
+      </p>
+      <ul>
+        <li>Snabb utrullning via noll-touch</li>
+        <li>Full kompatibilitet med Microsoft 365/Teams</li>
+        <li>Stöd för SSO, VPN och moderna säkerhetskrav</li>
+      </ul>
+    </div>
+    <div class="standin-img">HERO-BILD (Mac bakifrån)</div>
+  </div>
+</section>
+
+<!-- ====== ERBJUDANDEN-LIKT BLOCK ====== -->
+<section class="container">
+  <h2>Erbjudanden kopplade till Apple</h2>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="tile">
+      <div class="icon"></div>
+      <h3>Mac som tjänst</h3>
+      <p>Välj komplett tjänst eller valfria delkomponenter: Mac, managering, finansiering, support.</p>
+    </div>
+    <div class="tile">
+      <div class="icon">🎓</div>
+      <h3>Apple i skolan</h3>
+      <p>Kreativa verktyg och kodning – lösningar som digitaliserar och effektiviserar utbildning.</p>
+    </div>
+    <div class="tile">
+      <div class="icon">📱</div>
+      <h3>Atea Smartphone</h3>
+      <p>Säkerställ nyttjande under hela livslängden på ett säkert och hållbart sätt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRODUKT/LIST-LOOK ====== -->
+<section class="container">
+  <h2>Ta fram pris – Apple-modeller</h2>
+  <p class="muted" style="margin:.25rem 0 1rem">Snabb överblick av kontant- och scenariobaserade månadspriser.</p>
+  <div class="product-row">
+    <div class="product">
+      <span class="badge">Bästa månadspris</span>
+      <div class="pic">iPhone</div>
+      <h3>iPhone 17 Pro Max</h3>
+      <p class="muted">Flaggskepp • Titan • A19 Pro</p>
+      <p><strong>Kontant:</strong> 14 093&nbsp;kr • <strong>24/mån:</strong> 440&nbsp;kr</p>
+    </div>
+    <div class="product">
+      <span class="badge">Bästa månadspris</span>
+      <div class="pic">MacBook</div>
+      <h3>MacBook Air 13”</h3>
+      <p class="muted">Portabel • M4 • 1,2&nbsp;kg</p>
+      <p><strong>Kontant:</strong> 13 990&nbsp;kr • <strong>36/mån:</strong> 349&nbsp;kr</p>
+    </div>
+    <div class="product">
+      <span class="badge">Bästa månadspris</span>
+      <div class="pic">iPad</div>
+      <h3>iPad Pro 13”</h3>
+      <p class="muted">Ultra Retina • M4 • Pencil Pro</p>
+      <p><strong>Kontant:</strong> 12 990&nbsp;kr • <strong>24/mån:</strong> 399&nbsp;kr</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TCO / LCM ====== -->
+<section class="container">
+  <div class="two-col">
+    <div>
+      <h2>Lägre totalkostnad än många nya AI-PCs</h2>
+      <p>
+        Inköpspriset är bara början. När du räknar på livslängd, support och restvärde blir Mac ofta billigare.
+        Med Ateas livscykelhantering (LCM) planerar vi inköp, drift, återtag och cirkulär återanvändning.
+      </p>
+      <p><strong>Fler år i drift. Mindre support. Högre restvärde.</strong></p>
+    </div>
+    <div class="card" style="padding:16px">
+      <svg viewBox="0 0 400 220" style="width:100%;height:auto">
+        <!-- Axlar -->
+        <line x1="40" y1="180" x2="380" y2="180" stroke="#d1d5db" />
+        <line x1="40" y1="20" x2="40" y2="180" stroke="#d1d5db" />
+        <!-- PC-stapel -->
+        <rect x="80" y="80" width="70" height="100" fill="#e5e7eb" stroke="#cbd5e1"/>
+        <text x="115" y="195" text-anchor="middle" font-size="12" fill="#6b7280">PC</text>
+        <!-- Mac-stapel (lägre nettokostnad efter restvärde) -->
+        <rect x="220" y="110" width="70" height="70" fill="#cfe7d8" stroke="#7bb292"/>
+        <text x="255" y="195" text-anchor="middle" font-size="12" fill="#6b7280">Mac</text>
+        <!-- Förklaringar -->
+        <text x="200" y="16" text-anchor="middle" font-weight="700" font-size="14" fill="#111">Exempel: 3-års nettokostnad</text>
+      </svg>
+      <p class="muted" style="margin:.25rem 0 0">Illustrativ jämförelse: högre restvärde &amp; lägre support → lägre nettokostnad.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRISJÄMFÖRELSE: MAC vs AI-PC ====== -->
+<section class="container" id="prisjamforelse">
+  <h2>Jämför priset – Mac vs AI-PC</h2>
+  <p class="muted" style="margin:.25rem 0 1.5rem">
+    När du jämför kontantpriser och livslängd ser du snabbt varför Mac är det smartare valet.
+  </p>
+
+  <div class="two-col">
+    <!-- AI-PC -->
+    <div class="card" style="padding:20px">
+      <h3 style="color:#111;margin-top:0">AI-PC (exempel)</h3>
+      <div class="standin-img" style="aspect-ratio:4/3;margin:10px 0">AI-PC-bild</div>
+      <ul style="margin:0 0 10px">
+        <li>Intel Core Ultra 7 / 32 GB RAM</li>
+        <li>1 TB SSD</li>
+        <li>14” OLED-skärm</li>
+      </ul>
+      <p style="font-size:1.2rem;margin:10px 0"><strong>Kontantpris: </strong>22 490 kr</p>
+      <p class="muted">Uppskattad livslängd 3 år • Restvärde 10 %</p>
+      <div style="border-top:1px solid #eee;margin-top:12px;padding-top:8px">
+        <strong>Totalkostnad 3 år:</strong> ≈ 20 240 kr
+      </div>
+    </div>
+
+    <!-- MacBook Air -->
+    <div class="card" style="padding:20px;border-color:#cfe7d8;background:#f9fbfa">
+      <h3 style="color:var(--atea-green);margin-top:0">MacBook Air 13” (M4)</h3>
+      <div class="standin-img" style="aspect-ratio:4/3;margin:10px 0">MacBook Air-bild</div>
+      <ul style="margin:0 0 10px">
+        <li>Apple M4 / 16 GB RAM</li>
+        <li>512 GB SSD</li>
+        <li>13,6” Liquid Retina</li>
+      </ul>
+      <p style="font-size:1.2rem;margin:10px 0;color:var(--atea-green-dark)">
+        <strong>Kontantpris: </strong>13 990 kr
+      </p>
+      <p class="muted">Livslängd 4 år • Restvärde 40 %</p>
+      <div style="border-top:1px solid #d3e8da;margin-top:12px;padding-top:8px">
+        <strong>Totalkostnad 4 år:</strong> ≈ 10 390 kr
+      </div>
+    </div>
+  </div>
+
+  <p style="text-align:center;margin-top:24px;font-weight:600;color:#205c3b">
+    💡 MacBook Air sparar cirka <em>10 000 kr</em> över livscykeln jämfört med många nya AI-PCs.
+  </p>
+</section>
+
+<!-- ====== KALKYLATOR (inbyggd) ====== -->
+<section class="container" id="kalkylator">
+  <h2>Räkna på din TCO</h2>
+  <p class="muted" style="margin:.25rem 0 16px">Beräkna nettokostnad med livslängd, supportkostnad och restvärde.</p>
+  <div class="card calc" role="group" aria-label="TCO-kalkylator">
+    <div>
+      <div class="field">
+        <label for="price">Kontantpris (kr)</label>
+        <input id="price" type="number" value="13990" min="0" step="100" />
+      </div>
+      <div class="field">
+        <label for="support">Support &amp; drift (kr/år)</label>
+        <input id="support" type="number" value="800" min="0" step="50" />
+      </div>
+      <div class="field">
+        <label for="years">Livslängd (år)</label>
+        <select id="years">
+          <option>3</option><option selected>4</option><option>5</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="residual">Restvärde (%)</label>
+        <input id="residual" type="number" value="40" min="0" max="80" step="5" />
+      </div>
+    </div>
+    <div>
+      <div class="field">
+        <label for="interest">Finansiering (ränta %)</label>
+        <input id="interest" type="number" value="0" min="0" step="0.5" />
+      </div>
+      <div class="field">
+        <label for="period">Periodisering</label>
+        <select id="period">
+          <option value="24">24 mån</option>
+          <option value="36">36 mån</option>
+          <option value="48" selected>48 mån</option>
+          <option value="60">60 mån</option>
+        </select>
+      </div>
+      <div class="result" id="calcOut">
+        <div><strong>Nettokostnad (totalt):</strong> —</div>
+        <div><strong>≈ Månadspris:</strong> — / mån</div>
+        <div class="muted" style="margin-top:6px">Beräkning: (Kontant + Support×År − Restvärde) + ev. ränta</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== KONTAKT ====== -->
+<section class="container" id="kontakt">
+  <div class="two-col">
+    <div>
+      <h2>Från finansiering till support</h2>
+      <ul>
+        <li>Livscykelhantering (LCM)</li>
+        <li>Finansiering via Apple Financial Services</li>
+        <li>AppleCare for Enterprise</li>
+        <li>Atea Service Desk och auktoriserad Apple-service</li>
+      </ul>
+      <p class="muted">Gör som hundratals nordiska verksamheter – välj Mac för hållbarhet, prestanda och lägre TCO.</p>
+    </div>
+    <form class="card" style="padding:18px">
+      <h3 style="margin-bottom:8px">Kontakta oss om Mac i företag</h3>
+      <div class="field"><label>Förnamn</label><input type="text" placeholder="Ada" required></div>
+      <div class="field"><label>Efternamn</label><input type="text" placeholder="Lovelace" required></div>
+      <div class="field"><label>Företag</label><input type="text" placeholder="Atea AB" required></div>
+      <div class="field"><label>E-post</label><input type="email" placeholder="namn@foretag.se" required></div>
+      <div class="field"><label>Ytterligare information</label><input type="text" placeholder="Behov, antal enheter, tidplan …"></div>
+      <div style="margin-top:10px">
+        <button type="button" class="btn" onclick="alert('Tack! Vi hör av oss. (Mockup)')">Skicka</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ====== CTA-BAND ====== -->
+<section class="cta-band">
+  <div class="container">
+    <h2>Börja idag</h2>
+    <p>Mac fungerar i företag — och blir ännu billigare när du räknar TCO och livscykelhantering.</p>
+    <button class="btn" style="background:#fff;color:var(--atea-green)" onclick="document.getElementById('kalkylator').scrollIntoView({behavior:'smooth'})">Räkna på din TCO</button>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container foot-grid">
+    <div class="foot-col">
+      <h4>Om Atea</h4>
+      <a href="#">Vår ledning</a><br/>
+      <a href="#">Informationssäkerhet</a><br/>
+      <a href="#">Hållbarhetsarbete</a><br/>
+      <a href="#">Våra kontor</a>
+    </div>
+    <div class="foot-col">
+      <h4>Kontakt</h4>
+      <a href="#">Kundtjänst</a><br/>
+      <a href="#">Självservice (My Atea)</a><br/>
+      <a href="#">Felanmälan och returer</a>
+    </div>
+    <div class="foot-col">
+      <h4>Karriär</h4>
+      <a href="#">Att jobba på Atea</a><br/>
+      <a href="#">Din framtid som konsult</a><br/>
+      <a href="#">Lediga jobb</a>
+    </div>
+    <div class="foot-col">
+      <h4>Juridik</h4>
+      <a href="#">Allmänna villkor</a><br/>
+      <a href="#">Integritetspolicy</a><br/>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    © 2025 Atea Sverige AB — Apple Premium Business Partner
+  </div>
+</footer>
+
+<script>
+  // Enkel TCO-kalkyl som efterliknar känslan på atea.se
+  const els = {
+    price: document.getElementById('price'),
+    support: document.getElementById('support'),
+    years: document.getElementById('years'),
+    residual: document.getElementById('residual'),
+    interest: document.getElementById('interest'),
+    period: document.getElementById('period'),
+    out: document.getElementById('calcOut')
+  };
+
+  function fmt(num){ return new Intl.NumberFormat('sv-SE', {maximumFractionDigits:0}).format(num); }
+
+  function calc(){
+    const price = +els.price.value || 0;
+    const supp = +els.support.value || 0;
+    const years = +els.years.value || 0;
+    const residualPct = Math.min(80, Math.max(0, +els.residual.value || 0));
+    const r = (+els.interest.value || 0)/100;
+    const months = +els.period.value || (years*12);
+
+    const residualValue = price * residualPct/100;
+    const base = price + supp*years - residualValue; // förenklad nettokostnad
+
+    // enkel räntejustering (approx annuitet)
+    let total = base;
+    if(r > 0){
+      const m = r/12;
+      const ann = (base * m) / (1 - Math.pow(1+m, -months));
+      total = ann * months;
+    }
+
+    const perMonth = total / months;
+
+    els.out.innerHTML = `
+      <div><strong>Nettokostnad (totalt):</strong> ${fmt(Math.round(total))} kr</div>
+      <div><strong>≈ Månadspris:</strong> ${fmt(Math.round(perMonth))} kr / mån</div>
+      <div class="muted" style="margin-top:6px">Restvärde: ${fmt(Math.round(residualValue))} kr · Support ${years} år: ${fmt(supp*years)} kr</div>
+    `;
+  }
+
+  ['input','change'].forEach(ev=>{
+    Object.values(els).forEach(el=> el && el.addEventListener(ev, calc));
+  });
+  calc();
+</script>
+
+</body>
+</html>

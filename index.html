@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="sv-SE" data-market="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Apple – Produktjämförelse</title>
+  <meta name="description" content="Jämför iPhone, Mac och iPad – kontant eller månadskostnad över 24/36 månader." />
+  <link rel="preload" href="images_used/iphone/compare_iphone_17_pro_max_orange_large_2x.png" as="image" />
+  <link rel="preload" href="images_used/iphone/compare_iphone_17_pro_orange_large_2x.png" as="image" />
+  <link rel="preload" href="images_used/iphone/compare_iphone_17_air_sky_blue_large_2x.png" as="image" />
+  <link rel="preload" href="images_used/iphone/compare_iphone_17_lavender_large_2x.png" as="image" />
+  <link rel="preload" href="images_used/iphone/compare_iphone_16e_white_large_2x.png" as="image" />
+  <style>
+  /* =============================================================
+    Atea jämförelselayout – ren version (Option B)
+    -------------------------------------------------------------
+    Fokus: Enkel struktur, tidigare klassnamn och design.
+    ============================================================= */
+  :root { --container-max:1140px; --atea-color-brand-primary:hsl(120, 100%, 27%); --atea-color-brand-primary-rgb:0,138,0; --atea-color-brand-primary-hover:#007A00; --atea-color-brand-primary-active:#006600; --atea-color-text:#4D4F53; --atea-color-bg:#FFFFFF; --atea-color-bg-alt:#F2F2F2; --atea-color-surface:#FFFFFF; --atea-color-border:#D8D8D8; --atea-radius:24px; --atea-transition:200ms cubic-bezier(.4,0,.2,1); --atea-font-family:Helvetica,Arial,"SF Pro Text",sans-serif; /* Spacing scale */ --spacing-xxl:72px; --spacing-xl:56px; --spacing-lg:48px; --spacing-md:32px; --spacing-sm:24px; --spacing-xs:12px; }
+  body { margin:0; font-family:var(--atea-font-family); font-size:16px; line-height:1.47; color:var(--atea-color-text); background:var(--atea-color-bg); -webkit-font-smoothing:antialiased; }
+  .common-wrap { max-width:var(--container-max); margin:0 auto; padding:24px 0 24px; box-sizing:border-box; }
+  header.common-wrap { padding:var(--spacing-lg) 24px var(--spacing-sm); }
+  header .inner { margin:0; padding:0; max-width:100%; display: none; }
+  /* Adjusted heading hierarchy: page title now h2, product titles h3 */
+  #pageTitle { font-size:1.88em; line-height:1.15; margin:0 0 12px; font-weight:600; }
+  .wrapper.common-wrap { padding:var(--spacing-sm) 0 var(--spacing-xl); margin:0 auto; }
+  .subtitle { font-size:15px; opacity:.8; margin:0 0 var(--spacing-md); text-align:left; line-height:1.5; }
+  .controls { display:flex; flex-direction:column; gap:14px; align-items:flex-start; margin-bottom:20px; }
+  .product-bar { display:flex; gap:12px; flex-wrap:wrap; }
+  .product-btn { background:var(--atea-color-bg-alt); border:1px solid var(--atea-color-border); padding:7px 16px; font-size:13px; font-weight:600; letter-spacing:.03em; text-transform:uppercase; border-radius:999px; cursor:pointer; color:var(--atea-color-text); transition:background var(--atea-transition), color var(--atea-transition), border-color var(--atea-transition); }
+  .product-btn:hover { background:#E6E6E6; }
+  .product-btn.active { background:var(--atea-color-brand-primary); border-color:var(--atea-color-brand-primary); color:#fff; }
+  .view-bar, .scenario-bar { display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-start; }
+  .scenario-bar { display:none; }
+  .scenario-bar.show { display:flex; }
+  .view-btn, .scenario-btn { background:var(--atea-color-bg-alt); border:1px solid var(--atea-color-border); padding:7px 16px; font-size:13px; font-weight:600; letter-spacing:.03em; text-transform:uppercase; border-radius:999px; cursor:pointer; color:var(--atea-color-text); transition:background var(--atea-transition), color var(--atea-transition), border-color var(--atea-transition); }
+  /* Override uppercase for scenario buttons – keep natural casing (e.g. 24 Mån) */
+  .scenario-btn { text-transform:none; }
+  .view-btn:hover, .scenario-btn:hover { background:#E6E6E6; }
+  .view-btn.active, .scenario-btn.active { background:var(--atea-color-brand-primary); border-color:var(--atea-color-brand-primary); color:#fff; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:24px; align-items:stretch; }
+  .card { position:relative; display:flex; flex-direction:column; align-items:center; text-align:center; background:var(--atea-color-surface); border:1px solid var(--atea-color-border); border-radius:var(--atea-radius); padding:24px 18px 22px; box-shadow:0 2px 5px rgba(0,0,0,.06); transition:box-shadow var(--atea-transition), transform var(--atea-transition), border-color var(--atea-transition); min-height:500px; }
+  .card:hover { box-shadow:0 10px 28px -8px rgba(0,0,0,.28); transform:translateY(-4px); }
+  .figure { width:100%; background-size:contain; background-repeat:no-repeat; background-position:center; margin:0 0 12px; min-height:200px; display:block; }
+  @media (max-width:740px){ .figure { min-height:170px; } }
+  .colors { display:flex; gap:8px; margin:0 0 10px; }
+  .color-dot { width:18px; height:18px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,.25); cursor:pointer; position:relative; outline:none; transition:transform var(--atea-transition), box-shadow var(--atea-transition); }
+  .color-dot:focus-visible { box-shadow:0 0 0 2px var(--atea-color-brand-primary); }
+  .color-dot.active { box-shadow:0 0 0 2px var(--atea-color-brand-primary); transform:scale(1.15); }
+  .color-dot[aria-disabled="true"] { opacity:.35; cursor:not-allowed; }
+  .name { font-size:18px; font-weight:600; margin:4px 0 4px; letter-spacing:-.01em; }
+  .tag { font-size:10px; background:var(--atea-color-bg-alt); padding:4px 10px 5px; border-radius:999px; letter-spacing:.05em; text-transform:uppercase; margin:0 0 14px; font-weight:600; opacity:.75; }
+  .specs { list-style:none; padding:0; margin:0 0 16px; font-size:12px; line-height:1.38; text-align:left; width:100%; }
+  .specs li { margin:0 0 6px; }
+  .pricebox { width:100%; margin-top:auto; position:relative; border:1px solid var(--atea-color-border); border-radius:18px; background:#FFFFFF; padding:18px 16px 16px; display:flex; flex-direction:column; gap:14px; min-height:130px; box-sizing:border-box; overflow:hidden; }
+  /* Removed green radial overlay for uniform look */
+  .ribbon { position:absolute; top:10px; right:10px; background:var(--atea-color-brand-primary); color:#fff; font-size:10px; font-weight:600; letter-spacing:.06em; padding:5px 12px 5px; border-radius:999px; box-shadow:0 4px 10px -2px rgba(0,0,0,.3); pointer-events:none; z-index:5; }
+  .dual { display:flex; flex-direction:column; gap:12px; }
+  .line { display:flex; align-items:center; justify-content:flex-start; background:rgba(0,0,0,.018); border:1px solid rgba(0,0,0,.05); padding:10px 12px; border-radius:14px; transition:background var(--atea-transition), border-color var(--atea-transition), color var(--atea-transition); text-decoration:none; color:inherit; width:100%; box-sizing:border-box; gap:12px; min-height:46px; }
+  .line-cash { cursor:pointer; }
+  .line-group { display:flex; flex-direction:column; gap:10px; align-items:flex-start; width:100%; }
+  .line-group-monthly { gap:8px; }
+  .cash-chip { font-size:9px; letter-spacing:.12em; color:#333; background:rgba(0,0,0,.07); padding:4px 10px 3px; border-radius:999px; text-transform:uppercase; font-weight:600; display:inline-flex; align-items:center; white-space:nowrap; }
+  .line-cash:hover { background:rgba(var(--atea-color-brand-primary-rgb),.08); border-color:var(--atea-color-brand-primary); }
+  .line-monthly { display:none; }
+  .card.view-monthly .line-monthly { display:flex; }
+  .line-group-monthly { display:flex; flex-direction:column; gap:8px; width:100%; }
+  .card.view-cash .line-group-monthly { display:none; }
+  .line.line-monthly { flex-direction:column; align-items:stretch; gap:8px; width:100%; padding:14px 16px; border-radius:14px; border:1px solid rgba(0,0,0,.08); background:#fff; text-decoration:none; transition:background var(--atea-transition), color var(--atea-transition), border-color var(--atea-transition), box-shadow var(--atea-transition); box-sizing:border-box; overflow:hidden; }
+  .line.line-monthly .row { display:flex; justify-content:flex-start; align-items:center; gap:12px; width:100%; }
+  .line.line-monthly .lbl { font-size:11px; opacity:.72; letter-spacing:.08em; text-transform:uppercase; }
+  .line.line-monthly .val { font-size:20px; font-weight:700; letter-spacing:-.01em; color:currentColor; font-variant-numeric:tabular-nums; }
+  .line.line-monthly .details { display:flex; flex-wrap:wrap; align-items:center; gap:8px; width:100%; font-size:11px; font-weight:600; letter-spacing:.01em; color:rgba(0,0,0,.72); line-height:1.45; }
+  .line.line-monthly .detail { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:8px; background:var(--atea-color-brand-primary); color:#fff; border:1px solid rgba(255,255,255,.35); white-space:normal; word-break:break-word; }
+  .line.line-monthly .detail:empty { display:none; }
+  .line.line-monthly.is-save { background:var(--atea-color-brand-primary); border-color:var(--atea-color-brand-primary); color:#fff; box-shadow:0 12px 28px -18px rgba(0,0,0,.5); }
+  .line.line-monthly.is-plus { background:#C75A1C; border-color:#C75A1C; color:#fff; box-shadow:0 12px 28px -18px rgba(0,0,0,.5); }
+  .line.line-monthly.is-even { background:#5A5A5A; border-color:#5A5A5A; color:#fff; box-shadow:0 12px 28px -18px rgba(0,0,0,.45); }
+  .line .lbl { font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; opacity:.7; }
+  .line .val { margin-left:auto; font-size:clamp(18px, 3.6vw, 20px); font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .line.active { background:var(--atea-color-brand-primary); border-color:var(--atea-color-brand-primary); }
+  .line.active .lbl, .line.active .val { color:#fff; opacity:1; }
+  .cta-block { width:100%; margin:32px 0 0; padding:28px 32px; border-radius:20px; background:#FFFFFF; border:1px solid var(--atea-color-border); box-shadow:0 16px 36px -22px rgba(0,0,0,.22); text-align:left; }
+  .cta-title { margin:0 0 14px; font-size:24px; font-weight:700; letter-spacing:-.01em; color:var(--atea-color-text); }
+  .cta-copy { margin:0; font-size:16px; line-height:1.65; color:rgba(0,0,0,.75); }
+  .meta { font-size:11px; text-align:left; display:flex; gap:14px; flex-wrap:wrap; opacity:.75; }
+  .savings-note { font-size:13px; line-height:1.4; text-align:left; background:transparent; color:var(--atea-color-brand-primary); margin:0; padding:4px 2px 0; opacity:1; font-weight:500; }
+  .best-value .line-monthly.line { box-shadow:0 0 0 1px rgba(255,255,255,.5) inset; }
+  .best-value .pricebox { border-color:var(--atea-color-brand-primary); box-shadow:0 0 0 2px rgba(var(--atea-color-brand-primary-rgb),.25),0 2px 6px rgba(0,0,0,.08); }
+  /* Removed footer-note & global disclaimer styling per request */
+  .js-card-disclaimer { font-size:9px; line-height:1.3; opacity:.65; margin-top:6px; text-align:left; }
+  
+  @media (max-width:1100px){ .grid { gap:24px; } }
+  @media (max-width:900px){ .grid { grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); } }
+  @media (max-width:740px){ h2 { font-size:32px;} .card { min-height:480px; padding:22px 16px 20px;} }
+  @media (max-width:520px){ .grid { gap:22px;} .card { min-height:460px;} .cta-block { padding:22px 18px; border-radius:16px; } .cta-title { font-size:20px; } .cta-copy { font-size:14px; } }
+  </style>
+</head>
+<body>
+  <header class="common-wrap">
+  <h2 id="pageTitle">Apple – Jämför modeller</h2>
+    <p class="subtitle" id="pageSubtitle">Välj kategori, prisvy och scenario för att se kostnader och skillnader.</p>
+    <div class="controls">
+      <div class="product-bar" id="productBar" aria-label="Produktkategori" role="group"></div>
+      <div class="view-bar" id="viewBar" aria-label="Prisvy" role="group"></div>
+      <div class="scenario-bar" id="scenarioBar" aria-label="Finansieringsscenario" role="group"></div>
+    </div>
+  </header>
+  <div class="wrapper common-wrap">
+    <div id="grid" class="grid" aria-live="polite"></div>
+  <!-- Removed footer note and global disclaimer -->
+    <div class="cta-block" aria-labelledby="ctaTitle">
+      <h3 id="ctaTitle" class="cta-title">Redo för ett skräddarsytt kostnadsförslag?</h3>
+      <p class="cta-copy">Fyll i formuläret längre ned på sidan så kontaktar vi dig med en tydlig jämförelse mellan månadskostnad och kontantpris – anpassat efter din organisation.</p>
+    </div>
+  </div>
+  <script>
+  (function(){
+    // =============================================================
+    // Market / locale resolution (no dependency on <html data-market>).
+    // Detection order:
+    // 1. window.APP_MARKET / window.AteaPriceMarket / window.PriceModuleMarket (explicit global)
+    // 2. data-market on current <script> (embedded snippet)
+    // 3. #priceModuleRoot[data-market] or [data-price-module-root][data-market] (container)
+    // 4. <html data-market=".."> (if present)
+    // 5. <meta name="market" content="..">
+    // 6. ?market=se|no|dk query parameter
+    // 7. Fallback 'se'
+    // Runtime switching: window.setPriceModuleMarket('no')
+    // =============================================================
+    const globalMarket = (window.APP_MARKET || window.AteaPriceMarket || window.PriceModuleMarket);
+    const scriptEl = document.currentScript;
+    const scriptMarket = scriptEl?.getAttribute('data-market');
+    const containerMarket = document.getElementById('priceModuleRoot')?.getAttribute('data-market') || document.querySelector('[data-price-module-root]')?.getAttribute('data-market');
+    const attrMarket=document.documentElement.getAttribute('data-market');
+    const metaMarket=document.querySelector('meta[name="market"]')?.content;
+    const urlMarket=new URLSearchParams(location.search).get('market');
+    let market=(globalMarket||scriptMarket||containerMarket||attrMarket||metaMarket||urlMarket||'se');
+    market=(market||'se').toLowerCase();
+    // Locale & currency per market
+    const localeConfig={
+      se:{ locale:'sv-SE', currency:'SEK', title:'Apple – Jämför modeller', subtitle:'Välj kategori, prisvy och scenario för att se kostnader och skillnader.',
+     labels:{category:'Produktkategori', priceView:'Prisvy', scenario:'Finansieringsscenario', cash:'Kontant', monthly:'Månadskostnad', monthsAbbrev:'mån',
+       totalSave:'sparar', totalSame:'samma som kontant', totalPlus:'+ ', ribbon:'Bästa månadspris', footerNote:(t)=>`Månadspris beräknas som kontantpris × ${t.tariff}% över ${t.months} ${t.months === 1 ? 'månad' : 'månader'}.`,
+       disclaimerMonthly:'Priset gäller under förutsättning att finansieringsavtal godkänns. Reservation för ändringar, skrivfel och slutförsäljning.',
+       disclaimerCash:'Kontantpris inkl. moms. Reservation för ändringar, skrivfel och slutförsäljning.', saveVerb:'sparar' }},
+      no:{ locale:'nb-NO', currency:'NOK', title:'Apple – Sammenlign modeller', subtitle:'Velg kategori, prisvisning og scenario for å se kostnader og forskjeller.',
+     labels:{category:'Produktkategori', priceView:'Prisvisning', scenario:'Finansieringsscenario', cash:'Kontant', monthly:'Månedspris', monthsAbbrev:'mnd',
+       totalSave:'sparer', totalSame:'samme som kontant', totalPlus:'+ ', ribbon:'Beste månedspris', footerNote:(t)=>`Månedspris beregnes som kontantpris × ${t.tariff}% over ${t.months} ${t.months===1?'måned':'måneder'}.`,
+       disclaimerMonthly:'Prisen gjelder forutsatt godkjent finansieringsavtale. Forbehold om endringer, skrivefeil og utsolgt.',
+       disclaimerCash:'Kontantpris inkl. mva. Forbehold om endringer, skrivefeil og utsolgt.', saveVerb:'sparer' }},
+      dk:{ locale:'da-DK', currency:'DKK', title:'Apple – Sammenlign modeller', subtitle:'Vælg kategori, prisvisning og scenario for at se omkostninger og forskelle.',
+     labels:{category:'Produktkategori', priceView:'Prisvisning', scenario:'Finansieringsscenario', cash:'Kontant', monthly:'Månedspris', monthsAbbrev:'mdr',
+       totalSave:'sparer', totalSame:'samme som kontant', totalPlus:'+ ', ribbon:'Bedste månedspris', footerNote:(t)=>`Månedspris beregnes som kontantpris × ${t.tariff}% over ${t.months} ${t.months===1?'måned':'måneder'}.`,
+       disclaimerMonthly:'Prisen gælder forudsat godkendt finansieringsaftale. Forbehold for ændringer, trykfejl og udsolgte varer.',
+       disclaimerCash:'Kontantpris inkl. moms. Forbehold for ændringer, trykfejl og udsolgte varer.', saveVerb:'sparrer' }}
+    };
+    let L=localeConfig[market]||localeConfig.se;
+    let nf=new Intl.NumberFormat(L.locale,{style:'currency',currency:L.currency,maximumFractionDigits:0});
+    let df=new Intl.DateTimeFormat(L.locale,{year:'numeric',month:'long',day:'numeric'});
+  // Disclaimer state removed (no longer shown)
+  const disclaimerState={};
+  const categories=[{id:'mac',label:'MAC'},{id:'iphone',label:'iPhone'},{id:'ipad',label:'iPad'}];
+  const scenarioConfig={
+    iphone:[{months:24,tariff:3.125},{months:36,tariff:2.25}],
+    mac:[{months:24,tariff:3.376},{months:36,tariff:2.622}],
+    ipad:[{months:24,tariff:3.376},{months:36,tariff:2.622}]
+  };
+  const defaultCategory='iphone';
+  const fallbackScenarios=scenarioConfig[defaultCategory];
+  function getScenarios(category){
+    return scenarioConfig[category]||fallbackScenarios;
+  }
+  const initialScenario=getScenarios(defaultCategory)[0];
+  const state={ view:'cash', category:defaultCategory, months:initialScenario.months, tariff:initialScenario.tariff };
+  function scenarioLabel(m){
+    // Always use locale-configured abbreviation; capitalize first letter for button aesthetics.
+    const ab = L.labels.monthsAbbrev;
+    const cap = ab.charAt(0).toUpperCase()+ab.slice(1);
+    return `${m} ${cap}`;
+  }
+    const productsLocale={
+      se:[
+      {id:'pro_max',category:'iphone',name:'iPhone 17 Pro Max',base:14093,tag:'Flaggskepp • Titan',aspect:'3/4',specs:['Skärm: 6,9” ProMotion','Kamera: Trippel + 5× optisk','Chip: A19 Pro','Färger: Orange, blå, silver'],colors:[{id:'orange',label:'Orange',hex:'#F67828',file:'images_used/iphone/compare_iphone_17_pro_max_orange_large_2x.png'},{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/iphone/apple-iphone-17-pro-256gb-blå.jpg'},{id:'silver',label:'Silver',hex:'#D9DCE0',file:'images_used/iphone/apple-iphone-17-pro-256gb-silver.jpg'}]},
+      {id:'pro',category:'iphone',name:'iPhone 17 Pro',base:12434,tag:'Pro • Titan',aspect:'3/4',specs:['Skärm: 6,3” ProMotion','Kamera: Trippel + 3× optisk','Chip: A19','Färger: Orange, blå, silver'],colors:[{id:'orange',label:'Orange',hex:'#F67828',file:'images_used/iphone/compare_iphone_17_pro_orange_large_2x.png'},{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/iphone/apple-iphone-17-pro-256gb-blå.jpg'},{id:'silver',label:'Silver',hex:'#D9DCE0',file:'images_used/iphone/apple-iphone-17-pro-256gb-silver.jpg'}]},
+      {id:'air',category:'iphone',name:'iPhone Air',base:11595,tag:'Lätt • Balans',aspect:'3/4',specs:['Skärm: 6,5” 90 Hz','Kamera: Dual + 2× crop','Chip: A18','Färger: Blå, guld, vit, svart'],colors:[{id:'sky_blue',label:'Blå',hex:'#7DB7F2',file:'images_used/iphone/compare_iphone_17_air_sky_blue_large_2x.png'},{id:'gold',label:'Guld',hex:'#E9C873',file:'images_used/iphone/apple-iphone-air-256gb-guld.jpg'},{id:'white',label:'Vit',hex:'#FFFFFF',file:'images_used/iphone/apple-iphone-air-256gb-vit.jpg',border:'#D8D8D8'},{id:'black',label:'Svart',hex:'#111111',file:'images_used/iphone/apple-iphone-air-256gb-svart.jpg'}]},
+      {id:'std',category:'iphone',name:'iPhone 17',base:9125,tag:'Allround',aspect:'3/4',specs:['Skärm: 6,1” 60 Hz','Kamera: Dual','Chip: A17','Färger: Lavendel, salvia, blå, vit, svart'],colors:[{id:'lavender',label:'Lavendel',hex:'#C6B5E9',file:'images_used/iphone/compare_iphone_17_lavender_large_2x.png'},{id:'sage',label:'Salvia',hex:'#A7C4A2',file:'images_used/iphone/apple-iphone-17-256gb-salvia.jpg'},{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/iphone/apple-iphone-17-256gb-blå.jpg'},{id:'white',label:'Vit',hex:'#FFFFFF',file:'images_used/iphone/apple-iphone-17-256gb-vit.jpg',border:'#D8D8D8'},{id:'black',label:'Svart',hex:'#111111',file:'images_used/iphone/apple-iphone-17-256gb-svart.jpg'}]},
+      {id:'e',category:'iphone',name:'iPhone 16e',base:6799,tag:'Bas',aspect:'3/4',specs:['Skärm: 6,1” 60 Hz','Kamera: Singel','Chip: A16','Färger: Vit, svart'],colors:[{id:'white',label:'Vit',hex:'#FFFFFF',file:'images_used/iphone/compare_iphone_16e_white_large_2x.png',border:'#D8D8D8'},{id:'black',label:'Svart',hex:'#111111',file:'images_used/iphone/apple-iphone-16e-128gb-svart.jpg'}]},
+      {id:'mac_air_13',category:'mac',name:'MacBook Air 13”',base:10910,tag:'Portabel • M4',aspect:'4/3',specs:['Skärm: 13,6”','Chip: Apple M4','Vikt: 1,2 kg'],colors:[{id:'midnight',label:'Midnight',hex:'#101820',file:'images_used/mac/compare_macbook_air_m3_13_midnight_large_2x.png'}]},
+      {id:'mac_air_15',category:'mac',name:'MacBook Air 15”',base:14540,tag:'Stor skärm • M4',aspect:'4/3',specs:['Skärm: 15,3”','Chip: Apple M4','Vikt: 1,5 kg'],colors:[{id:'midnight',label:'Midnight',hex:'#101820',file:'images_used/mac/compare_macbook_air_m3_15_midnight_large_2x.png'}]},
+      {id:'mac_pro_14',category:'mac',name:'MacBook Pro 14”',base:18399,tag:'Pro • M5 Pro',aspect:'4/3',specs:['Skärm: 14,2” XDR','Chip: M5 Pro','Portar: HDMI, SD, TB4'],colors:[{id:'spaceblack',label:'Space Black',hex:'#1E1E1F',file:'images_used/mac/compare_macbook_pro_m3_14_spaceblack_large_2x.png'},{id:'silver',label:'Silver',hex:'#D9DCE0',file:'images_used/mac/apple-macbook-pro-2025-silver-apple-m5-16gb-512gb-142.jpg'}]},
+      {id:'mac_pro_16',category:'mac',name:'MacBook Pro 16”',base:27990,tag:'Stor Pro • M5 Max',aspect:'16/10',specs:['Skärm: 16,2” XDR','Chip: M5 Max','Batteri: Lång driftstid'],colors:[{id:'spaceblack',label:'Space Black',hex:'#1E1E1F',file:'images_used/mac/compare_macbook_pro_m3_16_spaceblack_large_2x.png'}]},
+      {id:'mac_mini',category:'mac',name:'Mac mini',base:8990,tag:'Kompakt • M5',aspect:'1/1',specs:['Format: Liten desktop','Chip: M4','Portar: Thunderbolt 4'],colors:[{id:'silver',label:'Silver',hex:'#D9DCE0',file:'images_used/mac/compare_mac_mini_m2_2port_silver_large_2x.png'}]},
+      {id:'imac_24',category:'mac',name:'iMac 24”',base:16990,tag:'All-in-one • M5',aspect:'16/10',specs:['Skärm: 24” 4,5K','Chip: M4','Färger: Flera'],colors:[{id:'blue',label:'Blå',hex:'#4D78D3',file:'images_used/mac/compare_imac_24_m3_2023_twoport_blue_large_2x.png'}]},
+      {id:'ipad_pro_13',category:'ipad',name:'iPad Pro 13”',base:15990,tag:'Pro • M5',aspect:'4/3',specs:['Skärm: 13” Ultra Retina','Chip: M5','Stöd: Pencil Pro','Port: USB‑C'],colors:[{id:'spaceblack',label:'Space Black',hex:'#1E1E1F',file:'images_used/ipad/ipad-compare-header-pro-202405.jpeg'},{id:'silver',label:'Silver',hex:'#D9DCE0',file:'images_used/ipad/ipad-compare-header-202405.jpeg'}]},
+      {id:'ipad_air_11',category:'ipad',name:'iPad Air 11”',base:8990,tag:'Lätt • M3',aspect:'4/3',specs:['Skärm: 11”','Chip: M3','Stöd: Pencil (USB‑C)','Touch ID: Toppknapp'],colors:[{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/ipad/ipad-compare-header-air-202405.jpeg'},{id:'purple',label:'Lila',hex:'#B9A4E6',file:'images_used/ipad/ipad-compare-header-air-202405.jpeg'},{id:'starlight',label:'Stjärnljus',hex:'#E9DEC9',file:'images_used/ipad/ipad-compare-header-air-202405.jpeg'}]},
+      {id:'ipad_10',category:'ipad',name:'iPad (10:e gen)',base:6290,tag:'Instegsmodell',aspect:'4/3',specs:['Skärm: 10,9”','Chip: A14','Port: USB‑C','Touch ID: Toppknapp'],colors:[{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/ipad/ipad-compare-header-202405.jpeg'},{id:'yellow',label:'Gul',hex:'#F5D463',file:'images_used/ipad/ipad-compare-header-pro-202405.jpeg'},{id:'silver',label:'Silver',hex:'#D9DCE0',file:'images_used/ipad/ipad-compare-header-202405.jpeg'}]},
+      {id:'ipad_mini',category:'ipad',name:'iPad mini',base:6990,tag:'Kompakt',aspect:'3/4',specs:['Skärm: 8,3”','Chip: A17','Stöd: Pencil (USB‑C)','Port: USB‑C'],colors:[{id:'pink',label:'Rosa',hex:'#E8A7B6',file:'images_used/ipad/ipad-compare-header-mini-202410.jpeg'},{id:'starlight',label:'Stjärnljus',hex:'#E9DEC9',file:'images_used/ipad/ipad-compare-header-202405.jpeg'},{id:'spacegray',label:'Rymdgrå',hex:'#444648',file:'images_used/ipad/ipad-compare-header-pro-202405.jpeg'}]}
+      ],
+      no:[
+       {id:'pro_max',category:'iphone',name:'iPhone 17 Pro Max',base:14093,tag:'Flaggskip • Titan',aspect:'3/4',specs:['Skjerm: 6,9” ProMotion','Kamera: Trippel + 5× optisk','Chip: A19 Pro','Farger: Oransje, blå, sølv'],colors:[{id:'orange',label:'Oransje',hex:'#F67828',file:'images_used/iphone/compare_iphone_17_pro_max_orange_large_2x.png'},{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/iphone/apple-iphone-17-pro-256gb-blå.jpg'},{id:'silver',label:'Sølv',hex:'#D9DCE0',file:'images_used/iphone/apple-iphone-17-pro-256gb-silver.jpg'}]},
+       {id:'pro',category:'iphone',name:'iPhone 17 Pro',base:12434,tag:'Pro • Titan',aspect:'3/4',specs:['Skjerm: 6,3” ProMotion','Kamera: Trippel + 3× optisk','Chip: A19','Farger: Oransje, blå, sølv'],colors:[{id:'orange',label:'Oransje',hex:'#F67828',file:'images_used/iphone/compare_iphone_17_pro_orange_large_2x.png'},{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/iphone/apple-iphone-17-pro-256gb-blå.jpg'},{id:'silver',label:'Sølv',hex:'#D9DCE0',file:'images_used/iphone/apple-iphone-17-pro-256gb-silver.jpg'}]},
+       {id:'air',category:'iphone',name:'iPhone Air',base:11595,tag:'Lett • Balanse',aspect:'3/4',specs:['Skjerm: 6,5” 90 Hz','Kamera: Dual + 2× crop','Chip: A18','Farger: Blå, gull, hvit, svart'],colors:[{id:'sky_blue',label:'Blå',hex:'#7DB7F2',file:'images_used/iphone/compare_iphone_17_air_sky_blue_large_2x.png'},{id:'gold',label:'Gull',hex:'#E9C873',file:'images_used/iphone/apple-iphone-air-256gb-guld.jpg'},{id:'white',label:'Hvit',hex:'#FFFFFF',file:'images_used/iphone/apple-iphone-air-256gb-vit.jpg',border:'#D8D8D8'},{id:'black',label:'Svart',hex:'#111111',file:'images_used/iphone/apple-iphone-air-256gb-svart.jpg'}]},
+       {id:'std',category:'iphone',name:'iPhone 17',base:9125,tag:'Allround',aspect:'3/4',specs:['Skjerm: 6,1” 60 Hz','Kamera: Dual','Chip: A17','Farger: Lavendel, salvie, blå, hvit, svart'],colors:[{id:'lavender',label:'Lavendel',hex:'#C6B5E9',file:'images_used/iphone/compare_iphone_17_lavender_large_2x.png'},{id:'sage',label:'Salvie',hex:'#A7C4A2',file:'images_used/iphone/apple-iphone-17-256gb-salvia.jpg'},{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/iphone/apple-iphone-17-256gb-blå.jpg'},{id:'white',label:'Hvit',hex:'#FFFFFF',file:'images_used/iphone/apple-iphone-17-256gb-vit.jpg',border:'#D8D8D8'},{id:'black',label:'Svart',hex:'#111111',file:'images_used/iphone/apple-iphone-17-256gb-svart.jpg'}]},
+       {id:'e',category:'iphone',name:'iPhone 16e',base:6799,tag:'Basismodell',aspect:'3/4',specs:['Skjerm: 6,1” 60 Hz','Kamera: Singel','Chip: A16','Farger: Hvit, svart'],colors:[{id:'white',label:'Hvit',hex:'#FFFFFF',file:'images_used/iphone/compare_iphone_16e_white_large_2x.png',border:'#D8D8D8'},{id:'black',label:'Svart',hex:'#111111',file:'images_used/iphone/apple-iphone-16e-128gb-svart.jpg'}]},
+       {id:'mac_air_13',category:'mac',name:'MacBook Air 13”',base:10910,tag:'Bærbar • M4',aspect:'4/3',specs:['Skjerm: 13,6”','Chip: Apple M4','Vekt: 1,2 kg'],colors:[{id:'midnight',label:'Midnight',hex:'#101820',file:'images_used/mac/compare_macbook_air_m3_13_midnight_large_2x.png'}]},
+       {id:'mac_air_15',category:'mac',name:'MacBook Air 15”',base:14540,tag:'Stor skjerm • M4',aspect:'4/3',specs:['Skjerm: 15,3”','Chip: Apple M4','Vekt: 1,5 kg'],colors:[{id:'midnight',label:'Midnight',hex:'#101820',file:'images_used/mac/compare_macbook_air_m3_15_midnight_large_2x.png'}]},
+       {id:'mac_pro_14',category:'mac',name:'MacBook Pro 14”',base:18399,tag:'Pro • M5 Pro',aspect:'4/3',specs:['Skjerm: 14,2” XDR','Chip: M5 Pro','Porter: HDMI, SD, TB4'],colors:[{id:'spaceblack',label:'Space Black',hex:'#1E1E1F',file:'images_used/mac/compare_macbook_pro_m3_14_spaceblack_large_2x.png'},{id:'silver',label:'Sølv',hex:'#D9DCE0',file:'images_used/mac/apple-macbook-pro-2025-silver-apple-m5-16gb-512gb-142.jpg'}]},
+       {id:'mac_pro_16',category:'mac',name:'MacBook Pro 16”',base:27990,tag:'Stor Pro • M5 Max',aspect:'16/10',specs:['Skjerm: 16,2” XDR','Chip: M5 Max','Batteri: Lang levetid'],colors:[{id:'spaceblack',label:'Space Black',hex:'#1E1E1F',file:'images_used/mac/compare_macbook_pro_m3_16_spaceblack_large_2x.png'}]},
+       {id:'mac_mini',category:'mac',name:'Mac mini',base:8990,tag:'Kompakt • M5',aspect:'1/1',specs:['Format: Liten desktop','Chip: M5','Porter: Thunderbolt 4'],colors:[{id:'silver',label:'Sølv',hex:'#D9DCE0',file:'images_used/mac/compare_mac_mini_m2_2port_silver_large_2x.png'}]},
+       {id:'imac_24',category:'mac',name:'iMac 24”',base:16990,tag:'Alt-i-ett • M5',aspect:'16/10',specs:['Skjerm: 24” 4,5K','Chip: M5','Farger: Flere'],colors:[{id:'blue',label:'Blå',hex:'#4D78D3',file:'images_used/mac/compare_imac_24_m3_2023_twoport_blue_large_2x.png'}]},
+       {id:'ipad_pro_13',category:'ipad',name:'iPad Pro 13”',base:15990,tag:'Pro • M5',aspect:'4/3',specs:['Skjerm: 13” Ultra Retina','Chip: M4','Støtte: Pencil Pro','Port: USB‑C'],colors:[{id:'spaceblack',label:'Space Black',hex:'#1E1E1F',file:'images_used/ipad/ipad-compare-header-pro-202405.jpeg'},{id:'silver',label:'Sølv',hex:'#D9DCE0',file:'images_used/ipad/ipad-compare-header-202405.jpeg'}]},
+       {id:'ipad_air_11',category:'ipad',name:'iPad Air 11”',base:8990,tag:'Lett • M3',aspect:'4/3',specs:['Skjerm: 11”','Chip: M3','Støtte: Pencil (USB‑C)','Touch ID: Toppknapp'],colors:[{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/ipad/ipad-compare-header-air-202405.jpeg'},{id:'purple',label:'Lilla',hex:'#B9A4E6',file:'images_used/ipad/ipad-compare-header-air-202405.jpeg'},{id:'starlight',label:'Stjernelys',hex:'#E9DEC9',file:'images_used/ipad/ipad-compare-header-air-202405.jpeg'}]},
+       {id:'ipad_10',category:'ipad',name:'iPad (10. gen)',base:6290,tag:'Startmodell',aspect:'4/3',specs:['Skjerm: 10,9”','Chip: A14','Port: USB‑C','Touch ID: Toppknapp'],colors:[{id:'blue',label:'Blå',hex:'#6CA8E8',file:'images_used/ipad/ipad-compare-header-202405.jpeg'},{id:'yellow',label:'Gul',hex:'#F5D463',file:'images_used/ipad/ipad-compare-header-pro-202405.jpeg'},{id:'silver',label:'Sølv',hex:'#D9DCE0',file:'images_used/ipad/ipad-compare-header-202405.jpeg'}]},
+       {id:'ipad_mini',category:'ipad',name:'iPad mini',base:6990,tag:'Kompakt',aspect:'3/4',specs:['Skjerm: 8,3”','Chip: A17','Støtte: Pencil (USB‑C)','Port: USB‑C'],colors:[{id:'pink',label:'Rosa',hex:'#E8A7B6',file:'images_used/ipad/ipad-compare-header-mini-202410.jpeg'},{id:'starlight',label:'Stjernelys',hex:'#E9DEC9',file:'images_used/ipad/ipad-compare-header-202405.jpeg'},{id:'spacegray',label:'Romgrå',hex:'#444648',file:'images_used/ipad/ipad-compare-header-pro-202405.jpeg'}]}
+      ]
+    };
+  let products=productsLocale[market]||productsLocale.se;
+    function activeProducts(){return products.filter(p=>p.enabled!==false);} 
+    function buildCards(){
+      const grid=document.getElementById('grid'); grid.innerHTML='';
+      activeProducts().forEach(p=>{ const specsHTML=p.specs.map(s=>{const [k,...r]=s.split(':');return `<li><strong>${k}:</strong> ${r.join(':').trim()}</li>`;}).join('');
+        const a=document.createElement('article'); a.className='card view-cash'; a.dataset.category=p.category; a.dataset.base=p.base; a.dataset.model=p.id;
+        a.innerHTML=`<div class='ribbon' hidden>${L.labels.ribbon}</div>
+<div class='figure' role='img' aria-label='${p.name}'></div>
+<h3 class='name'>${p.name}</h3>
+<div class='tag'>${p.tag}</div>
+<div class='colors' aria-label='${market==='se'?'Färger':(market==='no'?'Farger':'Farver')}' role='group'></div>
+<ul class='specs'>${specsHTML}</ul>
+<div class='pricebox' aria-live='polite'>
+  <div class='dual'>
+    <div class='line-group line-group-cash'>
+      <span class='cash-chip'>Kontantpris</span>
+      <a class='line line-cash' target='_blank' rel='noopener noreferrer'><span class='val js-price-cash'></span></a>
+    </div>
+    <div class='line-group line-group-monthly'>
+      <a class='line line-monthly' href='#'>
+        <div class='row'>
+          <span class='lbl js-month-label'>/${L.labels.monthsAbbrev}</span>
+          <span class='val js-price-monthly'></span>
+        </div>
+        <div class='details'>
+          <span class='detail js-detail-total'></span>
+          <span class='detail js-detail-cash'></span>
+          <span class='detail js-detail-diff'></span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <p class='card-disclaimer js-card-disclaimer' aria-live='polite'></p>
+</div>`;
+        grid.appendChild(a); });
+    }
+    const colorConfig=Object.fromEntries(activeProducts().map(p=>[p.id,p.colors]));
+    function buildColorDots(){ document.querySelectorAll('.card').forEach(card=>{ const cfg=colorConfig[card.dataset.model]; if(!cfg) return; const wrap=card.querySelector('.colors'); wrap.innerHTML=''; let first=null; cfg.forEach(v=>{ const btn=document.createElement('button'); btn.type='button'; btn.className='color-dot'; btn.style.background=v.hex; if(v.border) btn.style.boxShadow=`0 0 0 1px ${v.border}`; btn.setAttribute('aria-label',v.label); btn.dataset.file=v.file; btn.addEventListener('click',()=>applyColor(card,btn)); wrap.appendChild(btn); if(!first) first=btn; }); if(first){ first.classList.add('active'); applyColor(card,first);} else { wrap.style.display='none'; } }); }
+    function attachSwipe(){ document.querySelectorAll('.card').forEach(card=>{ const dots=Array.from(card.querySelectorAll('.color-dot')); if(dots.length<2) return; const fig=card.querySelector('.figure'); let startX=0, startY=0; fig.addEventListener('touchstart',e=>{ if(e.touches.length!==1) return; startX=e.touches[0].clientX; startY=e.touches[0].clientY; },{passive:true}); fig.addEventListener('touchend',e=>{ if(startX===0) return; const endX=e.changedTouches[0].clientX; const endY=e.changedTouches[0].clientY; const dx=endX-startX; const dy=endY-startY; const TH=40; if(Math.abs(dx)>TH && Math.abs(dx)>Math.abs(dy)){ const activeIndex=dots.findIndex(d=>d.classList.contains('active')); if(activeIndex===-1) return; let nextIndex; if(dx<0){ nextIndex=(activeIndex+1)%dots.length; } else { nextIndex=(activeIndex-1+dots.length)%dots.length; } applyColor(card,dots[nextIndex]); } startX=0; startY=0; },{passive:true}); }); }
+    function applyColor(card,btn){ if(!btn) return; card.querySelectorAll('.color-dot').forEach(d=>d.classList.toggle('active',d===btn)); card.querySelector('.figure').style.backgroundImage=`url(${btn.dataset.file})`; }
+    function buildProductBar(){ const bar=document.getElementById('productBar'); bar.innerHTML=''; categories.forEach(cat=>{ const btn=document.createElement('button'); btn.className='product-btn'+(state.category===cat.id?' active':''); btn.dataset.category=cat.id; btn.textContent=cat.label; bar.appendChild(btn); }); }
+    function buildViewBar(){ const bar=document.getElementById('viewBar'); bar.innerHTML=''; ['cash','monthly'].forEach(id=>{ const btn=document.createElement('button'); btn.className='view-btn'+(state.view===id?' active':''); btn.dataset.view=id; btn.textContent=id==='cash'?L.labels.cash:L.labels.monthly; bar.appendChild(btn); }); }
+  function buildScenarioBar(){
+    const bar=document.getElementById('scenarioBar');
+    bar.innerHTML='';
+    const scenarios=getScenarios(state.category);
+    if(!scenarios.length){ return; }
+    const matched=scenarios.find(s=>s.months===state.months);
+    const activeScenario=matched||scenarios[0];
+    state.months=activeScenario.months;
+    state.tariff=activeScenario.tariff;
+    scenarios.forEach(s=>{
+      const isActive=state.months===s.months && Number(state.tariff)===Number(s.tariff);
+      const btn=document.createElement('button');
+      btn.className='scenario-btn'+(isActive?' active':'');
+      btn.dataset.months=s.months;
+      btn.dataset.tariff=s.tariff;
+      btn.textContent=scenarioLabel(s.months);
+      bar.appendChild(btn);
+    });
+  }
+  function format(v){return nf.format(Math.round(v));}
+  function capitalize(str){ return (str||'').charAt(0).toUpperCase() + (str||'').slice(1); }
+    function render(){
+    document.getElementById('scenarioBar').classList.toggle('show',state.view==='monthly');
+      const all=[...document.querySelectorAll('.card')]; all.forEach(c=>{ c.style.display=c.dataset.category===state.category?'':'none'; }); const cards=all.filter(c=>c.style.display!=='none');
+  cards.forEach(card=>{
+    const base = Number(card.dataset.base);
+    const monthly = base * (state.tariff / 100);
+    const total = Math.round(monthly * state.months);
+    const diff = base - total;
+
+    card.classList.toggle('view-cash', state.view === 'cash');
+    card.classList.toggle('view-monthly', state.view === 'monthly');
+
+    const cashValue = card.querySelector('.js-price-cash');
+    if(cashValue) cashValue.textContent = format(base);
+    const monthlyValue = card.querySelector('.js-price-monthly');
+    if(monthlyValue) monthlyValue.textContent = format(monthly);
+    const monthLabel = card.querySelector('.js-month-label');
+    if(monthLabel) monthLabel.textContent = `${state.months}/${L.labels.monthsAbbrev}`;
+
+  const lineMonthly = card.querySelector('.line-monthly');
+  const detailTotal = card.querySelector('.js-detail-total');
+  const detailCash = card.querySelector('.js-detail-cash');
+  const detailDiff = card.querySelector('.js-detail-diff');
+
+    if(state.view === 'monthly'){
+      const monthsLabel = L.labels.monthsAbbrev || 'mån';
+      if(detailTotal){
+        detailTotal.textContent = `Totalt: ${format(total)} (${state.months} ${monthsLabel})`;
+      }
+      if(detailCash){
+        const cashLabel = L.labels.cash || 'Kontant';
+        detailCash.textContent = `${cashLabel}: ${format(base)}`;
+      }
+      if(lineMonthly){
+        lineMonthly.classList.remove('is-save','is-plus','is-even');
+        const saveVerb = (L.labels.saveVerb || L.labels.totalSave || 'sparar').toLowerCase();
+        if(detailDiff) detailDiff.textContent = '';
+        if(diff > 0){
+          lineMonthly.classList.add('is-save');
+          if(detailDiff) detailDiff.textContent = `${capitalize(saveVerb)}: ${format(diff)}`;
+        } else if(diff < 0){
+          lineMonthly.classList.add('is-plus');
+          const plusSymbol = (L.labels.totalPlus || '+').trim();
+          if(detailDiff) detailDiff.textContent = `Diff: ${plusSymbol}${format(Math.abs(diff))}`;
+        } else {
+          lineMonthly.classList.add('is-even');
+          const sameBase = capitalize(L.labels.totalSame || 'samma som kontant');
+          if(detailDiff) detailDiff.textContent = sameBase;
+        }
+      }
+    } else {
+      if(detailTotal) detailTotal.textContent = '';
+      if(detailCash) detailCash.textContent = '';
+      if(detailDiff) detailDiff.textContent = '';
+      if(lineMonthly) lineMonthly.classList.remove('is-save','is-plus','is-even');
+    }
+
+    const name = card.querySelector('.name')?.textContent.trim() || '';
+    const lineCash = card.querySelector('.line-cash');
+    if(lineCash){
+      lineCash.href = 'https://www.atea.se/eshop/products/?filters=S_' + encodeURIComponent(name);
+      lineCash.classList.toggle('active', state.view === 'cash');
+    }
+    if(lineMonthly){
+      lineMonthly.removeAttribute('href');
+      lineMonthly.setAttribute('aria-label', `${L.labels.monthly} för ${name}`);
+    }
+    const disEl = card.querySelector('.js-card-disclaimer');
+    if(disEl){
+      disEl.textContent = state.view === 'monthly' ? L.labels.disclaimerMonthly : L.labels.disclaimerCash;
+    }
+  });
+  const monthlyArr=cards.map(c=>({c,m:+c.dataset.base*(state.tariff/100)})); if(monthlyArr.length){ const min=Math.min(...monthlyArr.map(o=>o.m)); monthlyArr.forEach(o=>{ const ribbon=o.c.querySelector('.ribbon'); if(o.m===min && state.view==='monthly'){ ribbon.hidden=false; } else { ribbon.hidden=true; } }); }
+    }
+    document.getElementById('viewBar').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; document.querySelectorAll('.view-btn').forEach(x=>x.classList.toggle('active',x===b)); state.view=b.dataset.view; render();});
+    document.getElementById('scenarioBar').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; document.querySelectorAll('.scenario-btn').forEach(x=>x.classList.toggle('active',x===b)); state.months=+b.dataset.months; state.tariff=+b.dataset.tariff; render();});
+    document.getElementById('productBar').addEventListener('click',e=>{
+      const b=e.target.closest('button');
+      if(!b) return;
+      document.querySelectorAll('.product-btn').forEach(x=>x.classList.toggle('active',x===b));
+      const newCategory=b.dataset.category;
+      if(state.category!==newCategory){
+        state.category=newCategory;
+        const scenariosForCategory=getScenarios(state.category);
+        if(scenariosForCategory.length){
+          const matched=scenariosForCategory.find(s=>s.months===state.months);
+          const nextScenario=matched||scenariosForCategory[0];
+          state.months=nextScenario.months;
+          state.tariff=nextScenario.tariff;
+        }
+        buildScenarioBar();
+      }
+      render();
+    });
+    // ===== Runtime market reconfiguration helper =====
+    function applyMarket(newMarket){
+      if(!newMarket) return; const mk=newMarket.toLowerCase();
+      market = mk;
+      L = localeConfig[market]||localeConfig.se;
+      nf = new Intl.NumberFormat(L.locale,{style:'currency',currency:L.currency,maximumFractionDigits:0});
+      df = new Intl.DateTimeFormat(L.locale,{year:'numeric',month:'long',day:'numeric'});
+      products = productsLocale[market]||productsLocale.se;
+      disclaimerState.contactEmail = market==='dk'? 'sales@atea.dk' : (market==='no'? 'sales@atea.no' : 'sales@atea.se');
+      const t=document.getElementById('pageTitle'); if(t) t.textContent=L.title;
+      const s=document.getElementById('pageSubtitle'); if(s) s.textContent=L.subtitle;
+      buildProductBar();
+      buildViewBar();
+      buildScenarioBar();
+      buildCards();
+      buildColorDots();
+      attachSwipe();
+      render();
+    }
+    window.setPriceModuleMarket = applyMarket; // public API
+    applyMarket(market); // initial boot
+  })();
+  </script>
+</body>
+</html>
